@@ -1,15 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
 {% if user.is_authenticated %}
-  Olá {{ user.username }}!
+<h4 style="text-align:left;">Olá {{ user.username }}</h4>  
   {% else %}
-    Olá
+  <h4 style="text-align:left;">Olá</h4>  
 {% endif %}
+<h2>Vagas disponíveis</h2>	
 {% if vagas_list %}
     <ul>
     {% for vaga in vagas_list %}
-        <li><a href="/vagas/{{ vaga.id }}/">{{ vaga.vaga }}</a></li>
+        <li><a href="/{{ vaga.id }}/detail/">{{ vaga.vaga }}</a></li>
     {% endfor %}
     </ul>
     <a href="{{request.META.HTTP_REFERER}}">Go back</a>
 {% else %}
     <p>Não há vagas cadastradas.</p>
 {% endif %}
+{% endblock %}

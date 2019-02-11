@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %}Cadastro de Vaga{% endblock %}
+{% block title %}Cadastro de Currículo{% endblock %}
 
 {% block content %}
 
 <h4 style="text-align:left;">Olá {{ user.username }}</h4>  
 
-<h2>Cadastro de vaga</h2>	
+<h2>Cadastro de currículo</h2>	
 <form method="POST" class="post-form">{% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Save" class="default" name="_save">

@@ -4,8 +4,10 @@ from django.contrib.auth.models import User
 
 class Pessoa(models.Model):
     nome = models.CharField(max_length=100)
+    nickname = models.CharField(max_length=50)
     cpf = models.IntegerField(primary_key=True)
     email = models.CharField(max_length=100)
+
    
     def __str__(self):
         return self.nome
@@ -17,7 +19,7 @@ class Curriculo(models.Model):
     infos = models.CharField(max_length=200)
 
     def __str__(self):
-        return self.profile
+        return str(self.profile)
 
 class Vaga(models.Model):
     vaga = models.CharField(max_length=100)

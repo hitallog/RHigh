@@ -10,10 +10,9 @@ urlpatterns = [
     url(r'^cadastrar_curriculo/', views.cadastrar_curriculo, name='cadastrar_curriculo'),
     url(r'^cadastrar_vaga/', views.cadastrar_vaga, name='cadastrar_vaga'),
     url(r'^signup/', views.signup, name='signup'),
+    url(r'^filme/', views.filme, name='filme'),
     
+    # ex: /vagas/5/detail/
     url(r'^(?P<vaga_id>[0-9]+)/detail/$', views.detail, name='detail'),
-    # ex: /vagas/5/results/
-    url(r'^(?P<vagas_id>[0-9]+)/results/$', views.results, name='results'),
-    # ex: /vagas/5/vote/
-    url(r'^(?P<vagas_id>[0-9]+)/vote/$', views.vote, name='vote'),
+
 ]

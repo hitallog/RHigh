@@ -1,7 +1,22 @@
-<h1>{{ vaga.vaga_text }}</h1>
-<ul>
-{% for choice in vaga.choice_set.all %}
-    <li>{{ choice.choice_text }}</li>
-{% endfor %}
-</ul>
+{% extends 'base.html' %}
 
+{% block title %}{{vaga.vaga}}{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<h4 style="text-align:left;">Olá {{ user.username }}</h4>  
+  {% else %}
+    Olá
+{% endif %}
+<p><b>Vaga:</b> {{ vaga.vaga }}</p>
+<p><b>Descrição:</b> {{ vaga.desc }}</p>
+<p><b>Salário:</b> {{ vaga.salario }}</p>
+
+{% if filme.Response %}
+<p><b>Filme Relacionado:</b> {{ filme.Title }}</p>
+<p><b>Gênero:</b> {{ filme.Genre }}</p>
+    {% else %}
+<p><b>Filme Relacionado:</b> Não há filmes relacionados com essa vaga</p>
+{% endif %}
+<a href="{{request.META.HTTP_REFERER}}">Go back</a>
+{% endblock %}

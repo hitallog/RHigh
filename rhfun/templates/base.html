@@ -5,7 +5,9 @@
   <title>{% block title %}RHigh{% endblock %}</title>
 </head>
 <body>
+ 
   <main>
+    <a href="{% url 'home' %}">Home</a></br>
     {% block content %}
     {% endblock %}
   </main>

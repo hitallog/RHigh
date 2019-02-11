@@ -8,12 +8,28 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.views import generic
+from django.contrib.auth.models import User
+from django.views.generic.edit import UpdateView
+import requests
 
-
+from rhfun.forms import CadastrarVagaForm, CadastrarCurriculoForm, CadastrarPessoaForm
 
 
 def cadastrar(request):
-    return HttpResponse("Area de cadastro do cliente.")
+    if request.method == 'POST':
+        form_user = UserCreationForm(request.GET)
+        form = CadastrarPessoaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            nome = form_user['username'].value()
+            nickname = form.cleaned_data.get('nickname')
+            cpf = form.cleaned_data.get('cpf')
+            email = form.cleaned_data.get('email')
+            return redirect('home')
+    else:
+        form = UserCreationForm()
+    return render(request, 'cadastrar_pessoa.html', {'form': form})
+
 
 def ver_vagas(request):
     vagas_list = Vaga.objects.all()
@@ -21,14 +37,45 @@ def ver_vagas(request):
     return render(request, 'rhfun/vagas.html', context)
 
 def detail(request, vaga_id):
-    vaga = get_object_or_404(Vaga, pk=vaga_id)
-    return render(request, 'rhfun/detail.html', {'vaga': vaga})
+    vaga = Vaga.objects.get(pk=vaga_id)
+
+    filme = requests.get('http://www.omdbapi.com/?t='+vaga.vaga+'&apikey=29eb5528')
+
+    return render(request, 'rhfun/detail.html', {'vaga': vaga, 'filme': filme.json()})
+
+def filme(request):
+    return HttpResponse("buscar filme")
 
 def cadastrar_vaga(request):
-    return HttpResponse("Cadastrar vaga.")
+    if request.method == 'POST':
+        form = CadastrarVagaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            vaga = form.cleaned_data.get('vaga')
+            desc = form.cleaned_data.get('desc')
+            salario = form.cleaned_data.get('salario')
+            
+            return redirect('home')
+    else:
+        form = CadastrarVagaForm()
+    return render(request, 'cadastrar_vaga.html', {'form': form})
+
 
 def cadastrar_curriculo(request):
-    return HttpResponse("Aqui sera o cadastro de curriculos.")
+    if request.method == 'POST':
+        form = CadastrarCurriculoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            profile = form.cleaned_data.get('profile')
+            formacao = form.cleaned_data.get('formacao')
+            experiencia = form.cleaned_data.get('experiencia')
+            infos = form.cleaned_data.get('infos')
+
+            return redirect('home')
+    else:
+        form = CadastrarCurriculoForm()
+    return render(request, 'cadastrar_curriculo.html', {'form': form})
+            
 
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
