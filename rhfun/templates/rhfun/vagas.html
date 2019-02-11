@@ -1,0 +1,15 @@
+{% if user.is_authenticated %}
+  Olá {{ user.username }}!
+  {% else %}
+    Olá
+{% endif %}
+{% if vagas_list %}
+    <ul>
+    {% for vaga in vagas_list %}
+        <li><a href="/vagas/{{ vaga.id }}/">{{ vaga.vaga }}</a></li>
+    {% endfor %}
+    </ul>
+    <a href="{{request.META.HTTP_REFERER}}">Go back</a>
+{% else %}
+    <p>Não há vagas cadastradas.</p>
+{% endif %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  Olá {{ user.username }}!
+</br>
+</br>	
+<a href="{% url 'cadastrar_curriculo' %}">Cadastrar curriculo</a></br>
+<a href="{% url 'cadastrar_vaga' %}">Cadastrar vaga</a></br>
+<a href="{% url 'vagas' %}">Ver vagas</a>
+  <p><a href="{% url 'logout' %}">logout</a></p>
+{% else %}
+  <p>Você não está logado</p>
+  <a href="{% url 'login' %}">login</a></br>
+<a href="{% url 'signup' %}">Cadastrar</a></br>
+<a href="{% url 'vagas' %}">Ver vagas</a>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,7 @@
+<h1>{{ vaga.vaga_text }}</h1>
+<ul>
+{% for choice in vaga.choice_set.all %}
+    <li>{{ choice.choice_text }}</li>
+{% endfor %}
+</ul>
+
