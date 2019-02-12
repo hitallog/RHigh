@@ -1,4 +1,3 @@
-from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
@@ -11,9 +10,21 @@ from django.views import generic
 from django.contrib.auth.models import User
 from django.views.generic.edit import UpdateView
 import requests
+from rest_framework import viewsets
+from rhfun.serializers import UserSerializer, VagaSerializer
 
 from rhfun.forms import CadastrarVagaForm, CadastrarCurriculoForm, CadastrarPessoaForm
 
+class VagasViewSet(viewsets.ModelViewSet):
+    queryset = Vaga.objects.all()
+    serializer_class = VagaSerializer
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
 
 def cadastrar(request):
     if request.method == 'POST':

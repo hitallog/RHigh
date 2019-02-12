@@ -33,6 +33,7 @@ LOGOUT_REDIRECT_URL = 'home'
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
     'rhfun.apps.RhfunConfig',
     'django.contrib.admin',
     'django.contrib.auth',
