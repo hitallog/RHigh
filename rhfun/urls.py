@@ -1,14 +1,14 @@
+from django.views.generic.base import TemplateView
+from django.urls import include, path
+from rest_framework import routers
 from django.conf.urls import url
 from django.contrib import admin
-
-from . import views
-from rest_framework import routers
-from django.urls import include, path
 from rhfun import views
 
+
 router = routers.DefaultRouter()
-router.register(r'api/users', views.UserViewSet)
-router.register(r'api/vagas', views.VagasViewSet)
+router.register(r'users', views.UserViewSet)
+router.register(r'vagas', views.VagasViewSet)
 
 urlpatterns = [
     url(r'^cadastrar/', views.cadastrar, name='cadastrar'),
@@ -22,5 +22,7 @@ urlpatterns = [
     url(r'^(?P<vaga_id>[0-9]+)/detail/$', views.detail, name='detail'),
 
     path('api/', include(router.urls)),
+
+    url('', TemplateView.as_view(template_name='home.html'), name='home'), 
 
 ]

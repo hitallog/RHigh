@@ -15,9 +15,11 @@ from rhfun.serializers import UserSerializer, VagaSerializer
 
 from rhfun.forms import CadastrarVagaForm, CadastrarCurriculoForm, CadastrarPessoaForm
 
+
 class VagasViewSet(viewsets.ModelViewSet):
     queryset = Vaga.objects.all()
     serializer_class = VagaSerializer
+
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -25,6 +27,7 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
+
 
 def cadastrar(request):
     if request.method == 'POST':
@@ -86,10 +89,6 @@ def cadastrar_curriculo(request):
     else:
         form = CadastrarCurriculoForm()
     return render(request, 'cadastrar_curriculo.html', {'form': form})
-            
-
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
 
 def signup(request):
     if request.method == 'POST':
@@ -105,25 +104,3 @@ def signup(request):
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
 
-
-def vote(request, question_id):
-    vaga = get_object_or_404(Vaga, pk=question_id)
-    try:
-        selected_choice = vaga.choice_set.get(pk=request.POST['choice'])
-    except (KeyError, Choice.DoesNotExist):
-        # Redisplay the question voting form.
-        return render(request, 'rhfun/detail.html', {
-            'vaga': vaga,
-            'error_message': "You didn't select a choice.",
-        })
-    else:
-        selected_choice.vaga += 1
-        selected_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('rhfun:results', args=(vaga.id,)))
-
-def results(request, vaga_id):
-    response = "You're looking at the results of question %s."
-    return HttpResponse(response % vaga_id)
