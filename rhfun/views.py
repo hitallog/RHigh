@@ -2,17 +2,11 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from .models import Vaga
-from django.template import loader
-from django.shortcuts import get_object_or_404
-from django.http import HttpResponseRedirect, HttpResponse
-from django.urls import reverse
-from django.views import generic
+from django.http import HttpResponse
 from django.contrib.auth.models import User
-from django.views.generic.edit import UpdateView
 import requests
 from rest_framework import viewsets
 from rhfun.serializers import UserSerializer, VagaSerializer
-
 from rhfun.forms import CadastrarVagaForm, CadastrarCurriculoForm, CadastrarPessoaForm
 
 
@@ -50,6 +44,7 @@ def ver_vagas(request):
     context = {'vagas_list': vagas_list}
     return render(request, 'rhfun/vagas.html', context)
 
+
 def detail(request, vaga_id):
     vaga = Vaga.objects.get(pk=vaga_id)
 
@@ -57,8 +52,10 @@ def detail(request, vaga_id):
 
     return render(request, 'rhfun/detail.html', {'vaga': vaga, 'filme': filme.json()})
 
+
 def filme(request):
     return HttpResponse("buscar filme")
+
 
 def cadastrar_vaga(request):
     if request.method == 'POST':
@@ -89,6 +86,7 @@ def cadastrar_curriculo(request):
     else:
         form = CadastrarCurriculoForm()
     return render(request, 'cadastrar_curriculo.html', {'form': form})
+
 
 def signup(request):
     if request.method == 'POST':

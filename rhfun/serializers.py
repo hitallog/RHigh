@@ -1,6 +1,7 @@
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User
 from rest_framework import serializers
 from .models import Vaga
+
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
