@@ -2,8 +2,8 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from .models import Vaga
-import requests
 from rhfun.forms import CadastrarVagaForm, CadastrarCurriculoForm, CadastrarPessoaForm
+import requests
 
 
 def cadastrar(request):
@@ -80,4 +80,5 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, '../templates/rhfun/signup.html', {'form': form})
+
 
