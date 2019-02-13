@@ -2,25 +2,8 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from .models import Vaga
-from django.http import HttpResponse
-from django.contrib.auth.models import User
 import requests
-from rest_framework import viewsets
-from rhfun.serializers import UserSerializer, VagaSerializer
 from rhfun.forms import CadastrarVagaForm, CadastrarCurriculoForm, CadastrarPessoaForm
-
-
-class VagasViewSet(viewsets.ModelViewSet):
-    queryset = Vaga.objects.all()
-    serializer_class = VagaSerializer
-
-
-class UserViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = User.objects.all().order_by('-date_joined')
-    serializer_class = UserSerializer
 
 
 def cadastrar(request):
@@ -36,13 +19,13 @@ def cadastrar(request):
             return redirect('home')
     else:
         form = UserCreationForm()
-    return render(request, 'cadastrar_pessoa.html', {'form': form})
+    return render(request, '../templates/rhfun/cadastrar_pessoa.html', {'form': form})
 
 
 def ver_vagas(request):
     vagas_list = Vaga.objects.all()
     context = {'vagas_list': vagas_list}
-    return render(request, 'rhfun/vagas.html', context)
+    return render(request, '../templates/rhfun/vagas.html', context)
 
 
 def detail(request, vaga_id):
@@ -50,11 +33,7 @@ def detail(request, vaga_id):
 
     filme = requests.get('http://www.omdbapi.com/?t='+vaga.vaga+'&apikey=29eb5528')
 
-    return render(request, 'rhfun/detail.html', {'vaga': vaga, 'filme': filme.json()})
-
-
-def filme(request):
-    return HttpResponse("buscar filme")
+    return render(request, '../templates/rhfun/detail.html', {'vaga': vaga, 'filme': filme.json()})
 
 
 def cadastrar_vaga(request):
@@ -69,7 +48,7 @@ def cadastrar_vaga(request):
             return redirect('home')
     else:
         form = CadastrarVagaForm()
-    return render(request, 'cadastrar_vaga.html', {'form': form})
+    return render(request, '../templates/rhfun/cadastrar_vaga.html', {'form': form})
 
 
 def cadastrar_curriculo(request):
@@ -82,10 +61,10 @@ def cadastrar_curriculo(request):
             experiencia = form.cleaned_data.get('experiencia')
             infos = form.cleaned_data.get('infos')
 
-            return redirect('home')
+            return redirect('../templates/rhfun/home')
     else:
         form = CadastrarCurriculoForm()
-    return render(request, 'cadastrar_curriculo.html', {'form': form})
+    return render(request, '../templates/rhfun/cadastrar_curriculo.html', {'form': form})
 
 
 def signup(request):
@@ -97,8 +76,8 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('home')
+            return redirect('../templates/rhfun/home')
     else:
         form = UserCreationForm()
-    return render(request, 'signup.html', {'form': form})
+    return render(request, '../templates/rhfun/signup.html', {'form': form})
 
