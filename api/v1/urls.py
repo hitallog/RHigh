@@ -10,7 +10,7 @@ router.register(r'vagas', views.VagasViewSet)
 urlpatterns = [
 
     path('login', views.login),
-    path('sampleapi', views.sample_api),
+
     path('', include(router.urls)),
 
 ]

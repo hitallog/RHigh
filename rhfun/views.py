@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from .models import Vaga
 from rhfun.forms import CadastrarVagaForm, CadastrarCurriculoForm, CadastrarPessoaForm
+from django.contrib.auth.decorators import login_required
 import requests
 
 
@@ -51,6 +52,7 @@ def cadastrar_vaga(request):
     return render(request, '../templates/rhfun/cadastrar_vaga.html', {'form': form})
 
 
+@login_required
 def cadastrar_curriculo(request):
     if request.method == 'POST':
         form = CadastrarCurriculoForm(request.POST)
